@@ -55,7 +55,7 @@ class PlayerApp:
         # 创建Treeview
         columns = (
             "ID", "姓名", "年龄", "性别", "灵根", "境界", "突破概率", "经验",
-            "宗主", "父ID", "母ID", "师ID", "伴侣ID", "属性", "状态"
+            "宗主", "父ID", "母ID", "师ID", "伴侣ID", "属性", "状态","当前境界","下个境界","修炼系数"
         )
         
         # 创建带滚动条的框架
@@ -87,7 +87,8 @@ class PlayerApp:
             "ID": 50, "姓名": 100, "年龄": 50, "性别": 50,
             "灵根": 100, "境界": 80, "突破概率": 80, "经验": 80,
             "宗主": 50, "父ID": 50, "母ID": 50, "师ID": 50,
-            "伴侣ID": 50, "属性": 150, "状态": 50
+            "伴侣ID": 50, "属性": 150, "状态": 50,"当前境界":100,"下个境界":100,
+            "修炼系数":50
         }
 
         for col in columns:
@@ -136,7 +137,10 @@ class PlayerApp:
                     player['teacher_id'],
                     player['companion_id'],
                     player['attribute'],
-                    status_display
+                    status_display,
+                    player['realm_cur'],
+                    player['realm_next'],
+                    player['cultivate_coef'],
                 ))
         else:
             messagebox.showerror("错误", result['message'])

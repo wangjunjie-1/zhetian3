@@ -13,6 +13,7 @@ import logging
 from typing import Dict, Any
 from model.baseModel import BaseModel
 from core.eventmanager import EventManager
+from utils.spiritroot import SpiritRoot
 
 REALMS = [
     {"name": "凡人境","probability":0.99,"exp_required": 0,           "spirit_power": 0, "spirit_sense": 0,             "lifespan": 100},
@@ -87,7 +88,7 @@ class PlayerModel(BaseModel):
         if event_manager:
             self.event_manager = event_manager
             self.event_manager.subscribe('time_pass', self.cultivate)
-        
+    
     def to_dict(self) -> Dict[str, Any]:
         """
         将玩家数据序列化为字典格式
@@ -110,7 +111,10 @@ class PlayerModel(BaseModel):
             'attribute': self.attribute,
             'base_breakup_probability': self.base_breakup_probability,
             'realm_level': self.realm_level,
-            'current_exp': self.current_exp
+            'current_exp': self.current_exp,
+            'realm_cur':self.get_realm_cur['name'],
+            'realm_next':self.get_realm_next['name'],
+            'cultivate_coef':self.get_cultivate_coef
         }
         self.logger.debug(f"序列化玩家数据: {self.name}")
         return data
@@ -150,6 +154,21 @@ class PlayerModel(BaseModel):
             return self.get_realm_cur
         else:
             return REALMS[self.realm_level+1]
+        
+    @property
+    def get_cultivate_coef(self):
+        try:
+            is_leagel = SpiritRoot.check_legal(self.root)
+            if is_leagel:
+                coef = SpiritRoot.calculate_cultivation_coefficient(self.root)
+                return coef
+            else:
+                self.logger.error(f'非法的灵根名称')
+                return 1
+        except (ValueError, TypeError, SyntaxError) as e:
+            self.logger.error(e)
+            return 1
+        
 
     def cultivate(self, *args, **kwargs) -> None:
         """

@@ -1,6 +1,7 @@
 import random
 import math
-
+import logging
+logger = logging.getLogger()
 class SpiritRoot:
     # 定义灵根属性及其权重
     BASE_ATTRIBUTES = {
