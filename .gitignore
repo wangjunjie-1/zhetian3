@@ -1,0 +1,57 @@
+# 忽略系统文件
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+# 忽略虚拟环境
+venv/
+env/
+.venv/
+
+# 忽略编译生成的文件
+*.so
+*.pyd
+*.dll
+
+# 忽略测试和缓存文件
+*.test
+*.log
+*.tmp
+*.swp
+*.swo
+*.pyo
+
+# 忽略 Jupyter Notebook 的临时文件
+.ipynb_checkpoints/
+
+# 忽略 PyCharm 和其他 IDE 的配置文件
+.idea/
+*.iml
+*.ipynb
+.project
+.pydevproject
+
+# 忽略其他常见工具的缓存
+.DS_Store
+Thumbs.db
+.DS_Store?
+ehthumbs.db
+Desktop.ini
+
+# 忽略依赖文件
+Pipfile.lock
+
+# 忽略自动生成的文件
+build/
+dist/
+*.egg-info/
+
+# 忽略 Docker 相关文件
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# 忽略其他自定义文件夹或文件
+# 自定义文件夹或文件
+# custom_folder/
+# custom_file.txt
