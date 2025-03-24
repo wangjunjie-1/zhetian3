@@ -9,7 +9,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from controller.playerController import PlayerController
-from core.eventmanager import EventManager
+from core.EventManager import EventManager
 
 
 class PlayerApp:

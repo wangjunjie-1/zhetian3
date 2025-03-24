@@ -71,7 +71,7 @@ class PlayerModel(BaseModel):
         self.id: int = -1
         self.name: str = '龙傲天'
         self.age: int = 0
-        self.sex: int = 0
+        self.sex: int = 1
         self.isMaster: int = 0
         self.isDead: int = 0
         self.father_id: int = -1
@@ -80,9 +80,9 @@ class PlayerModel(BaseModel):
         self.companion_id: int = -1
         self.root: str = ""
         self.attribute: str = ""
-        self.base_breakup_probability: float = -1
-        self.realm_level: int = 1
-        self.current_exp: int = 0
+        self.base_breakup_probability: float = 0.1
+        self.realm_level: int = 0
+        self.current_exp: float = 0
 
         # 注册时间流逝事件
         if event_manager:

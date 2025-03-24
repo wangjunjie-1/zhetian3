@@ -30,7 +30,7 @@ class PlayerService:
         self.player_dao = PlayerDAO()
         self.logger = logging.getLogger(self.__class__.__name__)
     
-    def create_player(self, player_data: dict) -> Optional[PlayerModel]:
+    def create_player(self, player:PlayerModel) -> Optional[PlayerModel]:
         """
         创建新玩家
         
@@ -40,11 +40,7 @@ class PlayerService:
         Returns:
             Optional[PlayerModel]: 创建的玩家对象，失败则返回None
         """
-        try:
-            player = PlayerModel(self.event_manager)
-            # 从字典中加载数据到玩家对象
-            player.from_dict(player_data)
-            
+        try:            
             # 保存到数据库
             if self.player_dao.insert(player):
                 self.logger.info(f"成功创建玩家: {player.name}")
@@ -88,7 +84,7 @@ class PlayerService:
             self.logger.error(f"获取玩家列表失败: {str(e)}")
             return []
     
-    def get_master_details(self) -> List[dict]:
+    def get_master(self) -> List[dict]:
         """
         获取所有掌门的详细信息
         

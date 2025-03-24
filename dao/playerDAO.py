@@ -219,7 +219,7 @@ class PlayerDAO(BaseDAO):
         self.logger.debug(f"成功查询师父 ID={teacher_id} 的所有徒弟，共 {len(players)} 人")
         return players
 
-    def get_all_masters(self) -> List[PlayerModel]:
+    def get_master(self) ->Optional[PlayerModel]:
         """
         查询所有掌门
         

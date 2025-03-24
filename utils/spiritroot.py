@@ -29,10 +29,18 @@ class SpiritRoot:
     # 灵根数量的分布权重（灵根越多，几率越小）
     ATTRIBUTE_COUNT_WEIGHTS = [0.4, 0.3, 0.2, 0.08, 0.02]  # 1到5个灵根的权重
     
-    def __init__(self):
-        # 生成灵根文本
-        self.root_text = self._generate_root_text()
-        self.value = self.calculate_value(self.root_text)
+    def __init__(self,value=None):
+        if value is None:
+            # 生成灵根文本
+            self.root_text = self._generate_root_text()
+            self.value = self.calculate_value(self.root_text)
+        else:
+            while(True):
+                self.root_text = self._generate_root_text()
+                self.value = self.calculate_value(self.root_text)
+                if abs(self.value-value)/value <0.1:
+                    break
+
 
     @classmethod
     def _generate_root_text(cls):

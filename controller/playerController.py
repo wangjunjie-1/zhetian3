@@ -7,6 +7,8 @@ import logging
 from typing import Dict, Any, List
 from service.playerService import PlayerService
 from core.eventmanager import EventManager
+from model.playerModel import PlayerModel
+from utils.spiritroot import SpiritRoot
 
 class PlayerController:
     """
@@ -29,8 +31,20 @@ class PlayerController:
         """
         self.service = PlayerService(event_manager)
         self.logger = logging.getLogger(self.__class__.__name__)
+        if event_manager:
+            self.event_manager=event_manager
     
-    def create_player(self, player_data: Dict[str, Any]) -> Dict[str, Any]:
+    def init_master(self)->PlayerModel:
+        """"
+        游戏启动时，选择主角,不操作数据库
+        """
+        init_value = 100
+        master = PlayerModel(self.event_manager)
+        master.root = SpiritRoot(init_value).root_text
+        master.isMaster = True
+        return master
+
+    def create_player(self, player:PlayerModel):
         """
         创建新玩家
         
@@ -41,12 +55,12 @@ class PlayerController:
             Dict[str, Any]: 响应结果
         """
         try:
-            player = self.service.create_player(player_data)
-            if player:
+            ret  = self.service.create_player(player)
+            if ret:
                 return {
                     'success': True,
                     'message': '创建玩家成功',
-                    'data': player.to_dict()
+                    'data': ret.to_dict()
                 }
             return {
                 'success': False,
