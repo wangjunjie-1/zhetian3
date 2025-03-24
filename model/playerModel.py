@@ -14,6 +14,20 @@ from typing import Dict, Any
 from model.baseModel import BaseModel
 from core.eventmanager import EventManager
 
+REALMS = [
+    {"name": "凡人境","probability":0.99,"exp_required": 0,           "spirit_power": 0, "spirit_sense": 0,             "lifespan": 100},
+    {"name": "炼气境","probability":0.9,"exp_required": 100,          "spirit_power": 10, "spirit_sense": 5,            "lifespan": 150},
+    {"name": "筑基境","probability":0.8,"exp_required": 1000,         "spirit_power": 50, "spirit_sense": 20,           "lifespan": 300},
+    {"name": "金丹境","probability":0.7,"exp_required": 10000,        "spirit_power": 200, "spirit_sense": 100,         "lifespan": 500},
+    {"name": "元婴境","probability":0.6,"exp_required": 100000,       "spirit_power": 1000, "spirit_sense": 500,        "lifespan": 1000},
+    {"name": "化神境","probability":0.5,"exp_required": 1000000,      "spirit_power": 5000, "spirit_sense": 2000,       "lifespan": 2000},
+    {"name": "合体境","probability":0.4,"exp_required": 10000000,     "spirit_power": 20000, "spirit_sense": 10000,     "lifespan": 5000},
+    {"name": "大乘境","probability":0.3,"exp_required": 100000000,    "spirit_power": 100000, "spirit_sense": 50000,    "lifespan": 10000},
+    {"name": "渡劫境","probability":0.2,"exp_required": 1000000000,   "spirit_power": 500000, "spirit_sense": 200000,   "lifespan": 20000},
+    {"name": "真仙境","probability":0.0,"exp_required": 10000000000,  "spirit_power": 2000000, "spirit_sense": 1000000, "lifespan": -1},  # 长生不老
+]
+
+
 class PlayerModel(BaseModel):
     """
     玩家类
@@ -125,6 +139,17 @@ class PlayerModel(BaseModel):
         self.current_exp = data.get('current_exp', self.current_exp)
         
         self.logger.debug(f"反序列化玩家数据: {self.name}")
+
+    @property
+    def get_realm_cur(self)->dict:
+        return REALMS[self.realm_level]
+    
+    @property  
+    def get_realm_next(self):
+        if self.realm_level ==  len(REALMS):
+            return self.get_realm_cur
+        else:
+            return REALMS[self.realm_level+1]
 
     def cultivate(self, *args, **kwargs) -> None:
         """
